@@ -9,21 +9,33 @@
 /* Begin PBXBuildFile section */
 		FA1B750C28FDF192004FD8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */; };
 		FA1B750E28FDF192004FD8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B750D28FDF192004FD8A6 /* SceneDelegate.swift */; };
-		FA1B751028FDF192004FD8A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B750F28FDF192004FD8A6 /* ViewController.swift */; };
-		FA1B751328FDF192004FD8A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA1B751128FDF192004FD8A6 /* Main.storyboard */; };
+		FA1B751028FDF192004FD8A6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B750F28FDF192004FD8A6 /* MainViewController.swift */; };
 		FA1B751528FDF193004FD8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1B751428FDF193004FD8A6 /* Assets.xcassets */; };
 		FA1B751828FDF193004FD8A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA1B751628FDF193004FD8A6 /* LaunchScreen.storyboard */; };
+		FA1B752128FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752028FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift */; };
+		FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */; };
+		FA1B752628FDFE85004FD8A6 /* EmployeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */; };
+		FA1B752828FE0421004FD8A6 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752728FE0421004FD8A6 /* MainModel.swift */; };
+		FA1B752B28FE0E45004FD8A6 /* CompanyNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752A28FE0E45004FD8A6 /* CompanyNetworkModel.swift */; };
+		FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752C28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift */; };
+		FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FA1B750828FDF192004FD8A6 /* avito-task-internship.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "avito-task-internship.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA1B750D28FDF192004FD8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FA1B750F28FDF192004FD8A6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FA1B751228FDF192004FD8A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FA1B750F28FDF192004FD8A6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		FA1B751428FDF193004FD8A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA1B751728FDF193004FD8A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA1B751928FDF193004FD8A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA1B752028FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyNetworkResponseModel.swift; sourceTree = "<group>"; };
+		FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
+		FA1B752728FE0421004FD8A6 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
+		FA1B752A28FE0E45004FD8A6 /* CompanyNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyNetworkModel.swift; sourceTree = "<group>"; };
+		FA1B752C28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeNetworkModel.swift; sourceTree = "<group>"; };
+		FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +68,53 @@
 		FA1B750A28FDF192004FD8A6 /* avito-task-internship */ = {
 			isa = PBXGroup;
 			children = (
+				FA1B752928FE07A7004FD8A6 /* NetworkModule */,
+				FA1B752428FDFE67004FD8A6 /* MainModule */,
 				FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */,
 				FA1B750D28FDF192004FD8A6 /* SceneDelegate.swift */,
-				FA1B750F28FDF192004FD8A6 /* ViewController.swift */,
-				FA1B751128FDF192004FD8A6 /* Main.storyboard */,
 				FA1B751428FDF193004FD8A6 /* Assets.xcassets */,
 				FA1B751628FDF193004FD8A6 /* LaunchScreen.storyboard */,
 				FA1B751928FDF193004FD8A6 /* Info.plist */,
 			);
 			path = "avito-task-internship";
+			sourceTree = "<group>";
+		};
+		FA1B751F28FDF3A4004FD8A6 /* NetworkModels */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B753028FE0F79004FD8A6 /* ResponseModels */,
+				FA1B752A28FE0E45004FD8A6 /* CompanyNetworkModel.swift */,
+				FA1B752C28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift */,
+				FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */,
+			);
+			path = NetworkModels;
+			sourceTree = "<group>";
+		};
+		FA1B752428FDFE67004FD8A6 /* MainModule */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B750F28FDF192004FD8A6 /* MainViewController.swift */,
+				FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */,
+				FA1B752728FE0421004FD8A6 /* MainModel.swift */,
+			);
+			path = MainModule;
+			sourceTree = "<group>";
+		};
+		FA1B752928FE07A7004FD8A6 /* NetworkModule */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */,
+				FA1B751F28FDF3A4004FD8A6 /* NetworkModels */,
+			);
+			path = NetworkModule;
+			sourceTree = "<group>";
+		};
+		FA1B753028FE0F79004FD8A6 /* ResponseModels */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B752028FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift */,
+			);
+			path = ResponseModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +177,6 @@
 			files = (
 				FA1B751828FDF193004FD8A6 /* LaunchScreen.storyboard in Resources */,
 				FA1B751528FDF193004FD8A6 /* Assets.xcassets in Resources */,
-				FA1B751328FDF192004FD8A6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +187,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA1B751028FDF192004FD8A6 /* ViewController.swift in Sources */,
+				FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */,
+				FA1B751028FDF192004FD8A6 /* MainViewController.swift in Sources */,
 				FA1B750C28FDF192004FD8A6 /* AppDelegate.swift in Sources */,
+				FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */,
+				FA1B752628FDFE85004FD8A6 /* EmployeeCell.swift in Sources */,
+				FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */,
+				FA1B752828FE0421004FD8A6 /* MainModel.swift in Sources */,
 				FA1B750E28FDF192004FD8A6 /* SceneDelegate.swift in Sources */,
+				FA1B752B28FE0E45004FD8A6 /* CompanyNetworkModel.swift in Sources */,
+				FA1B752128FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FA1B751128FDF192004FD8A6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA1B751228FDF192004FD8A6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FA1B751628FDF193004FD8A6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +264,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -292,7 +340,6 @@
 				INFOPLIST_FILE = "avito-task-internship/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +367,6 @@
 				INFOPLIST_FILE = "avito-task-internship/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
