@@ -19,6 +19,9 @@
 		FA1B752B28FE0E45004FD8A6 /* CompanyNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752A28FE0E45004FD8A6 /* CompanyNetworkModel.swift */; };
 		FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752C28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift */; };
 		FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */; };
+		FA2A059628FF342200A04876 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059528FF342200A04876 /* Cache.swift */; };
+		FA2A059928FF347600A04876 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059828FF347600A04876 /* UserSettings.swift */; };
+		FA2A059B28FF74D600A04876 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059A28FF74D600A04876 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		FA1B752A28FE0E45004FD8A6 /* CompanyNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyNetworkModel.swift; sourceTree = "<group>"; };
 		FA1B752C28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeNetworkModel.swift; sourceTree = "<group>"; };
 		FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		FA2A059528FF342200A04876 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		FA2A059828FF347600A04876 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		FA2A059A28FF74D600A04876 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,7 @@
 		FA1B750A28FDF192004FD8A6 /* avito-task-internship */ = {
 			isa = PBXGroup;
 			children = (
+				FA2A059728FF344600A04876 /* Utils */,
 				FA1B752928FE07A7004FD8A6 /* NetworkModule */,
 				FA1B752428FDFE67004FD8A6 /* MainModule */,
 				FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */,
@@ -115,6 +122,16 @@
 				FA1B752028FDF3C4004FD8A6 /* CompanyNetworkResponseModel.swift */,
 			);
 			path = ResponseModels;
+			sourceTree = "<group>";
+		};
+		FA2A059728FF344600A04876 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FA2A059528FF342200A04876 /* Cache.swift */,
+				FA2A059A28FF74D600A04876 /* Parser.swift */,
+				FA2A059828FF347600A04876 /* UserSettings.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,9 +205,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */,
+				FA2A059928FF347600A04876 /* UserSettings.swift in Sources */,
 				FA1B751028FDF192004FD8A6 /* MainViewController.swift in Sources */,
 				FA1B750C28FDF192004FD8A6 /* AppDelegate.swift in Sources */,
+				FA2A059B28FF74D600A04876 /* Parser.swift in Sources */,
 				FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */,
+				FA2A059628FF342200A04876 /* Cache.swift in Sources */,
 				FA1B752628FDFE85004FD8A6 /* EmployeeCell.swift in Sources */,
 				FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */,
 				FA1B752828FE0421004FD8A6 /* MainModel.swift in Sources */,
