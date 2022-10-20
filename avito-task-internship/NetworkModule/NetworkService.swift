@@ -15,26 +15,12 @@ final class NetworkService {
     private var urlSessionTask: URLSessionDataTask?
     private lazy var cache = Cache<CompanyNetworkResponseModel>(parser: parser)
     private let parser = Parser<CompanyNetworkResponseModel>()
-//    private let urlSession: URLSession = {
-//        let config = URLSessionConfiguration.default
-//        config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-//
-//        config.urlCache = {
-//            let diskCacheUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("networkCache")
-//            print(diskCacheUrl)
-//            let cache = URLCache(memoryCapacity: 10_000_000, diskCapacity: 1_000_000_000, directory: diskCacheUrl)
-//
-//            return cache
-//        }()
-//
-//
-//        let session = URLSession(configuration: config)
-//        return session
-//    }()
-//
+
+    
     private let request = URL(string: Constants.urlString).flatMap {
         URLRequest(url: $0)
     }
+
     
     // MARK: - API
     func fetchData(_ completion: @escaping CompletionHandler) {
@@ -43,20 +29,7 @@ final class NetworkService {
             completion(.failure(NetworkError.incorrectURL))
             return
         }
-        
-//        urlSession.configuration.urlCache?.removeCachedResponses(since: Date().addingTimeInterval(-60))
-//        urlSession.configuration.urlCache?.removeAllCachedResponses()
-//        sleep(4)
 
-        
-        
-//        if let response = urlSession.configuration.urlCache?.cachedResponse(for: request) {
-//
-//            print("using cache")
-//            parseData(response.data, completion: completion)
-//            return
-//        }
-//
         cache.load { [weak self] cacheLoadResult in
             guard let self = self else {
                 return
@@ -96,8 +69,18 @@ final class NetworkService {
                 return
             }
             
-            guard error == nil else {
+            if let error = error {
                 // TODO: process error
+                let nsError = error as NSError
+                if nsError.domain == NSURLErrorDomain, nsError.code == -1009 {
+                    completion(.failure(NetworkError.noInternetConnection))
+                    return
+                }
+                
+                if nsError.domain == NSURLErrorDomain, nsError.code == -1001 {
+                    completion(.failure(NetworkError.timeout))
+                }
+                
                 completion(.failure(NetworkError.networkError))
                 return
             }
@@ -113,14 +96,13 @@ final class NetworkService {
                 completion(.failure(NetworkError.networkError))
                 return
             }
-            
-//            self.urlSession.configuration.urlCache?.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
+
             self.parseDataAndUpdateCache(data, completion)
         }
     }
     
     private func parseDataAndUpdateCache(_ data: Data, _ completion: @escaping CompletionHandler) {
-        self.parser.parseDataToResource(data) { [weak self] parseResult in
+        self.parser.parseDataToModel(data) { [weak self] parseResult in
             guard let self = self else {
                 return
             }
@@ -152,6 +134,9 @@ final class NetworkService {
 
 enum NetworkError: Error {
     case networkError
+    case timeout
     case responseError
     case incorrectURL
+    case noInternetConnection
 }
+

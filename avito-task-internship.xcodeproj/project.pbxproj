@@ -22,6 +22,11 @@
 		FA2A059628FF342200A04876 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059528FF342200A04876 /* Cache.swift */; };
 		FA2A059928FF347600A04876 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059828FF347600A04876 /* UserSettings.swift */; };
 		FA2A059B28FF74D600A04876 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059A28FF74D600A04876 /* Parser.swift */; };
+		FA2A059D2900073500A04876 /* CacheDiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059C2900073500A04876 /* CacheDiskStorage.swift */; };
+		FA2A05A029005B2E00A04876 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A059F29005B2E00A04876 /* HeaderView.swift */; };
+		FA2A05A32901CDA300A04876 /* UIColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A22901CDA300A04876 /* UIColor+ext.swift */; };
+		FA2A05A52901D5B300A04876 /* UIFont+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A42901D5B300A04876 /* UIFont+ext.swift */; };
+		FA2A05A72901E15800A04876 /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A62901E15800A04876 /* InfoLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +47,11 @@
 		FA2A059528FF342200A04876 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		FA2A059828FF347600A04876 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		FA2A059A28FF74D600A04876 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		FA2A059C2900073500A04876 /* CacheDiskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheDiskStorage.swift; sourceTree = "<group>"; };
+		FA2A059F29005B2E00A04876 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FA2A05A22901CDA300A04876 /* UIColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ext.swift"; sourceTree = "<group>"; };
+		FA2A05A42901D5B300A04876 /* UIFont+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+ext.swift"; sourceTree = "<group>"; };
+		FA2A05A62901E15800A04876 /* InfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,7 @@
 		FA1B750A28FDF192004FD8A6 /* avito-task-internship */ = {
 			isa = PBXGroup;
 			children = (
+				FA2A05A12901CD9400A04876 /* Extensions */,
 				FA2A059728FF344600A04876 /* Utils */,
 				FA1B752928FE07A7004FD8A6 /* NetworkModule */,
 				FA1B752428FDFE67004FD8A6 /* MainModule */,
@@ -100,8 +111,8 @@
 		FA1B752428FDFE67004FD8A6 /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				FA2A059E29005B1C00A04876 /* HelperViews */,
 				FA1B750F28FDF192004FD8A6 /* MainViewController.swift */,
-				FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */,
 				FA1B752728FE0421004FD8A6 /* MainModel.swift */,
 			);
 			path = MainModule;
@@ -130,8 +141,28 @@
 				FA2A059528FF342200A04876 /* Cache.swift */,
 				FA2A059A28FF74D600A04876 /* Parser.swift */,
 				FA2A059828FF347600A04876 /* UserSettings.swift */,
+				FA2A059C2900073500A04876 /* CacheDiskStorage.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		FA2A059E29005B1C00A04876 /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */,
+				FA2A059F29005B2E00A04876 /* HeaderView.swift */,
+				FA2A05A62901E15800A04876 /* InfoLabel.swift */,
+			);
+			path = HelperViews;
+			sourceTree = "<group>";
+		};
+		FA2A05A12901CD9400A04876 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FA2A05A22901CDA300A04876 /* UIColor+ext.swift */,
+				FA2A05A42901D5B300A04876 /* UIFont+ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,15 +235,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA2A05A72901E15800A04876 /* InfoLabel.swift in Sources */,
+				FA2A05A52901D5B300A04876 /* UIFont+ext.swift in Sources */,
 				FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */,
+				FA2A059D2900073500A04876 /* CacheDiskStorage.swift in Sources */,
 				FA2A059928FF347600A04876 /* UserSettings.swift in Sources */,
 				FA1B751028FDF192004FD8A6 /* MainViewController.swift in Sources */,
 				FA1B750C28FDF192004FD8A6 /* AppDelegate.swift in Sources */,
+				FA2A05A32901CDA300A04876 /* UIColor+ext.swift in Sources */,
 				FA2A059B28FF74D600A04876 /* Parser.swift in Sources */,
 				FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */,
 				FA2A059628FF342200A04876 /* Cache.swift in Sources */,
 				FA1B752628FDFE85004FD8A6 /* EmployeeCell.swift in Sources */,
 				FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */,
+				FA2A05A029005B2E00A04876 /* HeaderView.swift in Sources */,
 				FA1B752828FE0421004FD8A6 /* MainModel.swift in Sources */,
 				FA1B750E28FDF192004FD8A6 /* SceneDelegate.swift in Sources */,
 				FA1B752B28FE0E45004FD8A6 /* CompanyNetworkModel.swift in Sources */,

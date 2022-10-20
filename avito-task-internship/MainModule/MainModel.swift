@@ -15,7 +15,6 @@ final class MainModel {
     // MARK: - init
     init(networkService: NetworkService) {
         self.networkService = networkService
-//        fetchData()
     }
     
     // MARK: - API
@@ -39,8 +38,8 @@ final class MainModel {
             case .success(let success):
                 self.companyModel = success
                 self.networkRequestCallback?(nil)
-            case .failure(let failure):
-                self.networkRequestCallback?(failure)
+            case .failure(let error):
+                self.networkRequestCallback?(error)
             }
         }
     }

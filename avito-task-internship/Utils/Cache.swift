@@ -10,42 +10,42 @@ import Foundation
 final class Cache<T> {
     // MARK: - Private vars
     private let expirationTimeInterval: TimeInterval
-    private let cacheUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent("network.cache")
+    private let currentDateProvider: () -> Date
     private let parser: Parser<T>
+    private let cacheDiskStorage = CacheDiskStorage("network.cache")
     
-    // write to disk - async(with barrier), read - async
-    private let storageQueue = DispatchQueue(label: "storageQueue", qos: .utility, attributes: .concurrent)
+    /// allow only one save/multiple-load operations at a time
+    private let synchronizeSaveLoadQueue = DispatchQueue(label: "synchronizeSaveLoad", qos: .utility, attributes: .concurrent)
     
-    // allow only one save/load operation at a time
-    private let synchronizeSaveLoadQueue = DispatchQueue(label: "synchronizeSaveLoad", qos: .utility)
-    
-    init(invalidatationTimeInterval: TimeInterval = TimeInterval.minute, parser: Parser<T>) {
+    // MARK: - init
+    init(
+        parser: Parser<T>,
+        invalidatationTimeInterval: TimeInterval = TimeInterval.minute,
+        currentDateProvider: @escaping () -> Date = { Date() }
+    ) {
         self.expirationTimeInterval = invalidatationTimeInterval
         self.parser = parser
+        self.currentDateProvider = currentDateProvider
     }
     
     // MARK: - API
 
-    /// saves resource to cache
+    /// saves model to cache
     /// - Parameters:
-    ///   - resource: resource to save to cache
-    ///   - completion: Errors: parsing, writing to disk, wrong url.
+    ///   - model: model to save to cache
+    ///   - completion: Errors: parsing, writing to disk.
     ///   Queue for completion to run is up to the user.
-    func save(_ resource: T, completion: @escaping (Result<Void, Error>) -> Void) where T: Encodable {
-        synchronizeSaveLoadQueue.async { [weak self] in
+    func save(_ model: T, completion: @escaping (Result<Void, Error>) -> Void) where T: Encodable {
+        
+        synchronizeSaveLoadQueue.async(flags: .barrier) { [weak self] in
             guard let self = self else {
-                return
-            }
-            
-            guard let cacheUrl = self.cacheUrl  else {
-                completion(.failure(CacheError.wrongUrl))
                 return
             }
             
             let group = DispatchGroup()
             group.enter()
             
-            self.parser.parseResourceToData(resource) { [weak self] result in
+            self.parser.parseModelToData(model) { [weak self] result in
                 defer {
                     group.leave()
                 }
@@ -56,15 +56,13 @@ final class Cache<T> {
                 
                 switch result {
                 case .success(let data):
-                    self.storageQueue.sync {
-                        let result = Result {
-                            try data.write(to: cacheUrl)
-                            UserSettings.cacheDate = Date()
-                        }
-                        completion(.success(()))
+                    let result = Result {
+                        try self.cacheDiskStorage.save(data)
+                        UserSettings.cacheDate = Date()
                     }
-                case .failure(let failure):
-                    completion(.failure(failure))
+                    completion(result)
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
             
@@ -72,19 +70,14 @@ final class Cache<T> {
         }
     }
     
-    /// Loads resource from cache
+    /// Loads model from cache
     /// - Parameters:
-    ///   - completion: Resource from cache; nil if no resource or resource is expired. Error: parsing, reading from disk, wrong url.
+    ///   - completion: Model from cache; nil if no model or model is expired. Error: parsing, reading from disk, wrong url.
     ///   Queue for completion to run is up to the user.
     func load(_ completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
         
         synchronizeSaveLoadQueue.async { [weak self] in
             guard let self = self else {
-                return
-            }
-            
-            guard let cacheUrl = self.cacheUrl else {
-                completion(.failure(CacheError.wrongUrl))
                 return
             }
             
@@ -95,28 +88,22 @@ final class Cache<T> {
                 return
             }
             
-            self.storageQueue.sync { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                
-                let result = Result {
-                    try Data(contentsOf: cacheUrl)
-                }
-                
-                switch result {
-                case .success(let data):
-                    self.parser.parseDataToResource(data) { result in
-                        switch result {
-                        case .success(let resource):
-                            completion(.success(resource))
-                        case .failure(let failure):
-                            completion(.failure(failure))
-                        }
+            let result = Result {
+                try self.cacheDiskStorage.loadData()
+            }
+            
+            switch result {
+            case .success(let data):
+                self.parser.parseDataToModel(data) { result in
+                    switch result {
+                    case .success(let model):
+                        completion(.success(model))
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
-                case .failure(let failure):
-                    completion(.failure(failure))
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -131,14 +118,10 @@ final class Cache<T> {
             return
         }
         
-        if lastSavedDate.addingTimeInterval(expirationTimeInterval) < Date() {
+        if lastSavedDate.addingTimeInterval(expirationTimeInterval) < currentDateProvider() {
             UserSettings.cacheDate = nil
         }
     }
-}
-
-enum CacheError: Error {
-    case wrongUrl
 }
 
 extension TimeInterval {

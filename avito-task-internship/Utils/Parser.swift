@@ -9,28 +9,25 @@ import Foundation
 
 final class Parser<T> {
     // MARK: - Private vars
-    private let parserQueue = DispatchQueue(label: "parserQueue", qos: .utility)
+    private let parserQueue = DispatchQueue(label: "parserQueue", qos: .utility, attributes: .concurrent)
     
     // MARK: - API
-    func parseDataToResource(_ data: Data, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
+    func parseDataToModel(_ data: Data, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
         parserQueue.async { [data] in
-            let resource = try? JSONDecoder().decode(T.self, from: data)
             
-            guard let resource = resource else {
+            guard let model = try? JSONDecoder().decode(T.self, from: data) else {
                 completion(.failure(ParseError.parseError))
                 return
             }
             
-            completion(.success(resource))
+            completion(.success(model))
         }
     }
     
-    func parseResourceToData(_ resource: T, completion: @escaping (Result<Data, Error>) -> Void) where T: Encodable {
-        parserQueue.async { [resource] in
+    func parseModelToData(_ model: T, completion: @escaping (Result<Data, Error>) -> Void) where T: Encodable {
+        parserQueue.async { [model] in
             
-            let data = try? JSONEncoder().encode(resource)
-            
-            guard let data = data else {
+            guard let data = try? JSONEncoder().encode(model) else {
                 completion(.failure(ParseError.parseError))
                 return
             }

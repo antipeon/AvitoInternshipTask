@@ -19,8 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: scene)
+        
         let model = MainModel(networkService: NetworkService())
-        window.rootViewController = MainViewController(model: model)
+        let mainViewController = MainViewController(model: model)
+        
+        window.rootViewController = mainViewController
         
         self.window = window
         window.makeKeyAndVisible()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
 
     // MARK: - Private vars
     private let model: MainModel
@@ -28,23 +28,31 @@ class MainViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(EmployeeCell.self, forCellReuseIdentifier: EmployeeCell.reuseId)
+        tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.reuseId)
+        
         tableView.dataSource = self
         tableView.delegate = self
         
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .clear
+        tableView.layer.cornerRadius = Constants.cornerRadius
+        
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         return tableView
     }()
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .large)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
         return view
     }()
     
     // MARK: - Lifecycle
     override func loadView() {
         super.loadView()
-        view = tableView
-        view.backgroundColor = .white
+        view.addSubview(tableView)
+        view.backgroundColor = UIColor.CustomColors.backPrimary
         
         view.addSubview(activityIndicator)
         setUpConstraints()
@@ -52,7 +60,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,7 +76,22 @@ class MainViewController: UIViewController {
     
     // MARK: - Private funcs
     private func presentNetworkError(_ error: Error) {
-        // TODO: implement alert
+        var message = error.localizedDescription
+        
+        if let error = error as? NetworkError {
+            switch error {
+            case .noInternetConnection, .timeout:
+                message = "Check your internet connection"
+            default:
+                break
+            }
+        }
+        
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        present(alert, animated: true)
     }
     
     private func initializeNetworkCallback() {
@@ -75,27 +101,33 @@ class MainViewController: UIViewController {
             }
             
             DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                
                 if let error = error {
                     self.presentNetworkError(error)
                     return
                 }
                 
+                self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
-                self.tableView.setNeedsLayout()
-                self.tableView.layoutIfNeeded()
             }
         }
     }
-    
+
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.tableViewWidthToWidth),
+            tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
+    enum Constants {
+        static let tableViewWidthToWidth: CGFloat = 0.9
+        static let cornerRadius: CGFloat = 20
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -103,9 +135,18 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        34
+    }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        model.companyName
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.reuseId)
+        guard let header = header as? HeaderView else {
+            return header
+        }
+        header.title.text = model.companyName
+        return header
     }
 }
 
@@ -122,9 +163,25 @@ extension MainViewController: UITableViewDataSource {
             return cell
         }
         
-        cell.configureWithModel(model.employees[indexPath.row])
+        let index = indexPath.item
+        cell.configureWithModel(model.employees[index])
+        
+        cell.separatorInset = .zero
+        
+        guard index == 0 || index == model.employees.count - 1 else {
+            return cell
+        }
+        
+        cell.clipsToBounds = true
+        cell.layer.cornerRadius = Constants.cornerRadius
+        
+        if index == 0 {
+            cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        }
+        
         return cell
     }
-    
-    
 }
