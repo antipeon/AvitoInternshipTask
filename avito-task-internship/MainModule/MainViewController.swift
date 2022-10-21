@@ -8,7 +8,6 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-
     // MARK: - Private vars
     private let model: MainModel
     
@@ -17,6 +16,8 @@ final class MainViewController: UIViewController {
         self.model = model
         super.init(nibName: nil, bundle: nil)
         
+        
+        model.networkSubscriber = self
         initializeNetworkCallback()
     }
     
@@ -35,9 +36,9 @@ final class MainViewController: UIViewController {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
-        tableView.layer.cornerRadius = Constants.cornerRadius
-        
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        tableView.layer.cornerRadius = EmployeeCell.Constants.cornerRadius
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -69,10 +70,8 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        activityIndicator.startAnimating()
         model.fetchData()
     }
-
     
     // MARK: - Private funcs
     private func presentNetworkError(_ error: Error) {
@@ -106,7 +105,6 @@ final class MainViewController: UIViewController {
                     return
                 }
                 
-                self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
             }
         }
@@ -124,28 +122,19 @@ final class MainViewController: UIViewController {
         ])
     }
 
-    enum Constants {
+    private enum Constants {
         static let tableViewWidthToWidth: CGFloat = 0.9
-        static let cornerRadius: CGFloat = 20
     }
 }
 
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        34
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.reuseId)
         guard let header = header as? HeaderView else {
             return header
         }
-        header.title.text = model.companyName
+        header.setTitle(model.companyName)
         return header
     }
 }
@@ -166,22 +155,21 @@ extension MainViewController: UITableViewDataSource {
         let index = indexPath.item
         cell.configureWithModel(model.employees[index])
         
-        cell.separatorInset = .zero
-        
-        guard index == 0 || index == model.employees.count - 1 else {
-            return cell
-        }
-        
-        cell.clipsToBounds = true
-        cell.layer.cornerRadius = Constants.cornerRadius
-        
-        if index == 0 {
-            cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else {
-            cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-        }
-        
         return cell
+    }
+}
+
+// MARK: - NetworkSubscriber
+extension MainViewController: NetworkSubscriber {
+    func networkRequestDidStart() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
+    func networkResponseDidReceive() {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
     }
 }

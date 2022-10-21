@@ -11,5 +11,8 @@ extension UIColor {
     enum CustomColors {
         static let backPrimary = UIColor(named: "backPrimary")
         static let backSecondary = UIColor(named: "backSecondary")
+        static let separator = UIColor(named: "separator")
+        static let overlay = UIColor(named: "overlay")
+        static let border = UIColor(named: "border")
     }
 }

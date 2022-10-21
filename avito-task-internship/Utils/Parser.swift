@@ -40,4 +40,3 @@ final class Parser<T> {
 enum ParseError: Error {
     case parseError
 }
-

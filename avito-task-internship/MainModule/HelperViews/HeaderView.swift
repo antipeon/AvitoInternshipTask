@@ -10,30 +10,37 @@ import UIKit
 final class HeaderView: UITableViewHeaderFooterView {
     static let reuseId = "HeaderViewId"
     
-    lazy var title: UILabel = {
+    // MARK: - Subviews
+    private lazy var titleView: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.CustomFonts.large
         return label
     }()
     
+    // MARK: - init
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(title)
+        contentView.addSubview(titleView)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UIView
     override func layoutSubviews() {
         super.layoutSubviews()
-        title.sizeToFit()
-        title.frame.origin = CGPoint(
-            x: (contentView.bounds.width - title.bounds.width) / 2,
-            y: (contentView.bounds.height - title.bounds.height) / 2
+        titleView.sizeToFit()
+        titleView.frame.origin = CGPoint(
+            x: (contentView.bounds.width - titleView.bounds.width) / 2,
+            y: (contentView.bounds.height - titleView.bounds.height) / 2
         )
     }
+    
+    // MARK: - Public funcs
+    func setTitle(_ title: String) {
+        titleView.text = title
+    }
 }
-

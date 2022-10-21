@@ -15,12 +15,9 @@ final class NetworkService {
     private var urlSessionTask: URLSessionDataTask?
     private lazy var cache = Cache<CompanyNetworkResponseModel>(parser: parser)
     private let parser = Parser<CompanyNetworkResponseModel>()
-
-    
     private let request = URL(string: Constants.urlString).flatMap {
         URLRequest(url: $0)
     }
-
     
     // MARK: - API
     func fetchData(_ completion: @escaping CompletionHandler) {
@@ -131,7 +128,7 @@ final class NetworkService {
     }
 }
 
-
+// MARK: - NetworkError
 enum NetworkError: Error {
     case networkError
     case timeout
@@ -139,4 +136,3 @@ enum NetworkError: Error {
     case incorrectURL
     case noInternetConnection
 }
-

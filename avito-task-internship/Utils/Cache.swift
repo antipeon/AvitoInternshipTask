@@ -128,5 +128,3 @@ extension TimeInterval {
     static let minute: TimeInterval = 60
     static let hour: TimeInterval = 60 * 60
 }
-
-

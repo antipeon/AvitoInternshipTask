@@ -27,6 +27,8 @@
 		FA2A05A32901CDA300A04876 /* UIColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A22901CDA300A04876 /* UIColor+ext.swift */; };
 		FA2A05A52901D5B300A04876 /* UIFont+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A42901D5B300A04876 /* UIFont+ext.swift */; };
 		FA2A05A72901E15800A04876 /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A62901E15800A04876 /* InfoLabel.swift */; };
+		FA2A05A92901E72200A04876 /* DashedSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05A82901E72200A04876 /* DashedSeparator.swift */; };
+		FA2A05AB290202DE00A04876 /* CGRect+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A05AA290202DE00A04876 /* CGRect+ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		FA2A05A22901CDA300A04876 /* UIColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ext.swift"; sourceTree = "<group>"; };
 		FA2A05A42901D5B300A04876 /* UIFont+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+ext.swift"; sourceTree = "<group>"; };
 		FA2A05A62901E15800A04876 /* InfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLabel.swift; sourceTree = "<group>"; };
+		FA2A05A82901E72200A04876 /* DashedSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashedSeparator.swift; sourceTree = "<group>"; };
+		FA2A05AA290202DE00A04876 /* CGRect+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,7 @@
 				FA1B752528FDFE85004FD8A6 /* EmployeeCell.swift */,
 				FA2A059F29005B2E00A04876 /* HeaderView.swift */,
 				FA2A05A62901E15800A04876 /* InfoLabel.swift */,
+				FA2A05A82901E72200A04876 /* DashedSeparator.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			children = (
 				FA2A05A22901CDA300A04876 /* UIColor+ext.swift */,
 				FA2A05A42901D5B300A04876 /* UIFont+ext.swift */,
+				FA2A05AA290202DE00A04876 /* CGRect+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -240,11 +246,13 @@
 				FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */,
 				FA2A059D2900073500A04876 /* CacheDiskStorage.swift in Sources */,
 				FA2A059928FF347600A04876 /* UserSettings.swift in Sources */,
+				FA2A05A92901E72200A04876 /* DashedSeparator.swift in Sources */,
 				FA1B751028FDF192004FD8A6 /* MainViewController.swift in Sources */,
 				FA1B750C28FDF192004FD8A6 /* AppDelegate.swift in Sources */,
 				FA2A05A32901CDA300A04876 /* UIColor+ext.swift in Sources */,
 				FA2A059B28FF74D600A04876 /* Parser.swift in Sources */,
 				FA1B752F28FE0F64004FD8A6 /* PhoneNumber.swift in Sources */,
+				FA2A05AB290202DE00A04876 /* CGRect+ext.swift in Sources */,
 				FA2A059628FF342200A04876 /* Cache.swift in Sources */,
 				FA1B752628FDFE85004FD8A6 /* EmployeeCell.swift in Sources */,
 				FA1B752D28FE0E6D004FD8A6 /* EmployeeNetworkModel.swift in Sources */,
