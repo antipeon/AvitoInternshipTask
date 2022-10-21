@@ -17,14 +17,3 @@ struct CompanyNetworkResponseModel: Codable {
         self.init(company: CompanyNetworkModel(name: "", employees: []))
     }
 }
-
-extension CompanyNetworkResponseModel {
-    func sorted(by comparator: (EmployeeNetworkModel, EmployeeNetworkModel) -> Bool) -> Self {
-        let employees = company.employees.sorted(by: comparator)
-        return withNewEmployees(employees)
-    }
-
-    private func withNewEmployees(_ newEmployees: [EmployeeNetworkModel]) -> Self {
-        CompanyNetworkResponseModel(company: CompanyNetworkModel(name: company.name, employees: newEmployees))
-    }
-}

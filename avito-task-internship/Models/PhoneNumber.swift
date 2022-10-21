@@ -5,10 +5,20 @@
 //  Created by Samat Gaynutdinov on 18.10.2022.
 //
 
-struct PhoneNumber: RawRepresentable, Codable {
+struct PhoneNumber {
     private let number: String
 
-    // MARK: - RawRepresentable
+    private init(number: String) {
+        self.number = number
+    }
+
+    // MARK: - Constants
+    private enum Constants {
+        static let numberLength = 6
+    }
+}
+
+extension PhoneNumber: RawRepresentable {
     var rawValue: String {
         number
     }
@@ -23,10 +33,5 @@ struct PhoneNumber: RawRepresentable, Codable {
         }
 
         self.number = rawValue
-    }
-
-    // MARK: - Constants
-    private enum Constants {
-        static let numberLength = 6
     }
 }

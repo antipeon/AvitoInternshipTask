@@ -7,17 +7,22 @@
 
 import UIKit
 
-final class MainViewController: UIViewController {
+protocol MainDisplayLogic: AnyObject {
+    func displayStartLoading(viewModel: Main.FetchData.ViewModel.Dummy)
+    func presentError(viewModel: Main.FetchData.ViewModel.Error)
+    func presentCompanyData(viewModel: Main.FetchData.ViewModel.Company)
+    func displayFinishLoading(viewModel: Main.FetchData.ViewModel.Dummy)
+}
+
+final class MainViewController: UIViewController, MainDisplayLogic, UITableViewDelegate, UITableViewDataSource {
+    var interactor: MainBusinessLogic?
+
     // MARK: - Private vars
-    private let model: MainModel
+    private var displayedModel = Main.FetchData.ViewModel.Company(company: CompanyNetworkModel())
 
     // MARK: - init
-    init(model: MainModel) {
-        self.model = model
+    init() {
         super.init(nibName: nil, bundle: nil)
-
-        model.networkSubscriber = self
-        initializeNetworkCallback()
     }
 
     required init?(coder: NSCoder) {
@@ -68,47 +73,59 @@ final class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        model.fetchData()
+        let request = Main.FetchData.Request()
+        interactor?.fetchData(request: request)
     }
 
-    // MARK: - Private funcs
-    private func presentNetworkError(_ error: Error) {
-        var message = error.localizedDescription
-
-        if let error = error as? NetworkError {
-            switch error {
-            case .noInternetConnection, .timeout:
-                message = "Check your internet connection"
-            default:
-                break
-            }
-        }
-
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-
+    // MARK: - MainDisplayLogic
+    func presentError(viewModel: Main.FetchData.ViewModel.Error) {
+        let alert = UIAlertController(title: "Error", message: viewModel.errorMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
-
         present(alert, animated: true)
     }
 
-    private func initializeNetworkCallback() {
-        model.networkRequestCallback = { [weak self] error in
-            guard let self = self else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.presentNetworkError(error)
-                    return
-                }
-
-                self.tableView.reloadData()
-            }
-        }
+    func presentCompanyData(viewModel: Main.FetchData.ViewModel.Company) {
+        displayedModel = viewModel
+        tableView.reloadData()
     }
 
+    func displayStartLoading(viewModel: Main.FetchData.ViewModel.Dummy) {
+        activityIndicator.startAnimating()
+    }
+
+    func displayFinishLoading(viewModel: Main.FetchData.ViewModel.Dummy) {
+        activityIndicator.stopAnimating()
+    }
+
+    // MARK: - UITableViewDataSource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        displayedModel.company.employees.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeCell.reuseId, for: indexPath)
+
+        guard let cell = cell as? EmployeeCell else {
+            return cell
+        }
+
+        let index = indexPath.item
+        cell.configureWithModel(displayedModel.company.employees[index])
+
+        return cell
+    }
+
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.reuseId)
+        guard let header = header as? HeaderView else {
+            return header
+        }
+        header.setTitle(displayedModel.company.name)
+        return header
+    }
+
+    // MARK: - Private funcs
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -123,52 +140,5 @@ final class MainViewController: UIViewController {
 
     private enum Constants {
         static let tableViewWidthToWidth: CGFloat = 0.9
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.reuseId)
-        guard let header = header as? HeaderView else {
-            return header
-        }
-        header.setTitle(model.companyName)
-        return header
-    }
-}
-
-// MARK: - UITableViewDataSource
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        model.employees.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeCell.reuseId, for: indexPath)
-
-        guard let cell = cell as? EmployeeCell else {
-            return cell
-        }
-
-        let index = indexPath.item
-        cell.configureWithModel(model.employees[index])
-
-        return cell
-    }
-}
-
-// MARK: - NetworkSubscriber
-extension MainViewController: NetworkSubscriber {
-    func networkRequestDidStart() {
-        DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
-        }
-    }
-
-    func networkResponseDidReceive() {
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-        }
     }
 }

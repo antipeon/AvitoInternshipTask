@@ -23,8 +23,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: scene)
 
-        let model = MainModel(networkService: NetworkService())
-        let mainViewController = MainViewController(model: model)
+        let mainViewController = MainViewController()
+        let mainInteractor = MainInteractor()
+        let mainPresenter = MainPresenter()
+
+        mainViewController.interactor = mainInteractor
+        mainInteractor.presenter = mainPresenter
+        mainPresenter.viewController = mainViewController
 
         window.rootViewController = mainViewController
 

@@ -8,9 +8,9 @@
 import Foundation
 import CocoaLumberjack
 
-final class NetworkService {
+final class NetworkService: CompanyFetcherProtocol {
 
-    typealias CompletionHandler = (Result<CompanyNetworkResponseModel, Error>) -> Void
+    typealias CompletionHandler = CompanyFetcherProtocol.CompletionHandler
 
     // MARK: - Private vars
     private var urlSessionTask: URLSessionDataTask?
@@ -21,7 +21,7 @@ final class NetworkService {
     }
 
     // MARK: - API
-    func fetchData(_ completion: @escaping CompletionHandler) {
+    func fetchCompanyData(_ completion: @escaping CompletionHandler) {
 
         guard let request = request else {
             completion(.failure(NetworkError.incorrectURL))
