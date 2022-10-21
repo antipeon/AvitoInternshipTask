@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CocoaLumberjack
 
 final class NetworkService {
 
@@ -35,8 +36,7 @@ final class NetworkService {
             switch cacheLoadResult {
             case .success(let cachedModel):
                 if let cachedModel = cachedModel {
-                    // TODO: replace with loger
-                    print("cache hit")
+                    DDLogInfo("cache hit")
                     completion(.success(cachedModel))
                     return
                 }
@@ -51,8 +51,7 @@ final class NetworkService {
 
     // MARK: - Private funcs
     private func onCacheMiss(_ request: URLRequest, _ completion: @escaping CompletionHandler) {
-        // TODO: replace with loger
-        print("cache miss - fetching from network")
+        DDLogInfo("cache miss - fetching from network")
         let task = dataTask(request, completion)
 
         // TODO: think about what to do if task is set
@@ -111,10 +110,10 @@ final class NetworkService {
                 self.cache.save(model) { saveResult in
                     switch saveResult {
                     case .success:
-                        // TODO: replace with loger
-                        print("saved to cache successfuly")
+                        DDLogInfo("saved to cache successfuly")
                     case .failure(let error):
-                        assert(false, "couldn't save to cache - \(error.localizedDescription)")
+                        DDLogError("couldn't save to cache - \(error.localizedDescription)")
+                        assert(false)
                     }
                 }
                 completion(.success(model))
