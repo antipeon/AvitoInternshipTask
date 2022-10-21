@@ -18,7 +18,7 @@ final class InfoLabel: UIView {
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
-    
+
     private lazy var infoView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +28,7 @@ final class InfoLabel: UIView {
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
     }()
-    
+
     // MARK: - init
     init(tagText: String) {
         super.init(frame: .zero)
@@ -36,30 +36,30 @@ final class InfoLabel: UIView {
         setUpConstraints()
         tagView.text = "\(tagText):"
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public funcs
     func configureInfoText(infoViewText: String) {
         infoView.text = infoViewText
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
+
     // MARK: - Private funcs
     private func setUpSubviews() {
         addSubview(tagView)
         addSubview(infoView)
     }
-    
+
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             tagView.leftAnchor.constraint(equalTo: leftAnchor),
             tagView.topAnchor.constraint(equalTo: topAnchor),
             tagView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25),
-            
+
             infoView.leftAnchor.constraint(equalTo: tagView.rightAnchor),
             infoView.rightAnchor.constraint(equalTo: rightAnchor),
             infoView.topAnchor.constraint(equalTo: tagView.topAnchor),
@@ -67,4 +67,3 @@ final class InfoLabel: UIView {
         ])
     }
 }
-

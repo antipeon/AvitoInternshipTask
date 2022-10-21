@@ -13,10 +13,10 @@ final class Cache<T> {
     private let currentDateProvider: () -> Date
     private let parser: Parser<T>
     private let cacheDiskStorage = CacheDiskStorage("network.cache")
-    
+
     /// allow only one save/multiple-load operations at a time
     private let synchronizeSaveLoadQueue = DispatchQueue(label: "synchronizeSaveLoad", qos: .utility, attributes: .concurrent)
-    
+
     // MARK: - init
     init(
         parser: Parser<T>,
@@ -27,7 +27,7 @@ final class Cache<T> {
         self.parser = parser
         self.currentDateProvider = currentDateProvider
     }
-    
+
     // MARK: - API
 
     /// saves model to cache
@@ -36,24 +36,24 @@ final class Cache<T> {
     ///   - completion: Errors: parsing, writing to disk.
     ///   Queue for completion to run is up to the user.
     func save(_ model: T, completion: @escaping (Result<Void, Error>) -> Void) where T: Encodable {
-        
+
         synchronizeSaveLoadQueue.async(flags: .barrier) { [weak self] in
             guard let self = self else {
                 return
             }
-            
+
             let group = DispatchGroup()
             group.enter()
-            
+
             self.parser.parseModelToData(model) { [weak self] result in
                 defer {
                     group.leave()
                 }
-                
+
                 guard let self = self else {
                     return
                 }
-                
+
                 switch result {
                 case .success(let data):
                     let result = Result {
@@ -65,33 +65,33 @@ final class Cache<T> {
                     completion(.failure(error))
                 }
             }
-            
+
             group.wait()
         }
     }
-    
+
     /// Loads model from cache
     /// - Parameters:
     ///   - completion: Model from cache; nil if no model or model is expired. Error: parsing, reading from disk, wrong url.
     ///   Queue for completion to run is up to the user.
     func load(_ completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
-        
+
         synchronizeSaveLoadQueue.async { [weak self] in
             guard let self = self else {
                 return
             }
-            
+
             self.invalidateCacheIfNeeded()
-            
+
             guard !self.cacheEmptyOrExpired else {
                 completion(.success(nil))
                 return
             }
-            
+
             let result = Result {
                 try self.cacheDiskStorage.loadData()
             }
-            
+
             switch result {
             case .success(let data):
                 self.parser.parseDataToModel(data) { result in
@@ -107,17 +107,17 @@ final class Cache<T> {
             }
         }
     }
-    
+
     var cacheEmptyOrExpired: Bool {
         UserSettings.cacheDate == nil
     }
-    
+
     // MARK: - Private funcs
     private func invalidateCacheIfNeeded() {
         guard let lastSavedDate = UserSettings.cacheDate else {
             return
         }
-        
+
         if lastSavedDate.addingTimeInterval(expirationTimeInterval) < currentDateProvider() {
             UserSettings.cacheDate = nil
         }

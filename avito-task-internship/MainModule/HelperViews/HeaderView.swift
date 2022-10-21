@@ -9,7 +9,7 @@ import UIKit
 
 final class HeaderView: UITableViewHeaderFooterView {
     static let reuseId = "HeaderViewId"
-    
+
     // MARK: - Subviews
     private lazy var titleView: UILabel = {
         let label = UILabel()
@@ -17,18 +17,18 @@ final class HeaderView: UITableViewHeaderFooterView {
         label.font = UIFont.CustomFonts.large
         return label
     }()
-    
+
     // MARK: - init
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
+
         contentView.addSubview(titleView)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - UIView
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -38,7 +38,7 @@ final class HeaderView: UITableViewHeaderFooterView {
             y: (contentView.bounds.height - titleView.bounds.height) / 2
         )
     }
-    
+
     // MARK: - Public funcs
     func setTitle(_ title: String) {
         titleView.text = title
