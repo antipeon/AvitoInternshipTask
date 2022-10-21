@@ -151,7 +151,7 @@
 				FA2A05A12901CD9400A04876 /* Extensions */,
 				FA2A059728FF344600A04876 /* Utils */,
 				FA1B752928FE07A7004FD8A6 /* NetworkModule */,
-				FA1B752428FDFE67004FD8A6 /* MainModule */,
+				FA1B752428FDFE67004FD8A6 /* MainScene */,
 				FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */,
 				FA1B750D28FDF192004FD8A6 /* SceneDelegate.swift */,
 				FA1B751428FDF193004FD8A6 /* Assets.xcassets */,
@@ -171,7 +171,7 @@
 			path = NetworkModels;
 			sourceTree = "<group>";
 		};
-		FA1B752428FDFE67004FD8A6 /* MainModule */ = {
+		FA1B752428FDFE67004FD8A6 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
 				FA2A059E29005B1C00A04876 /* HelperViews */,
@@ -180,7 +180,7 @@
 				FA3D6443290338B100799D57 /* MainPresenter.swift */,
 				FA2A05BC290328AB00A04876 /* MainModels.swift */,
 			);
-			path = MainModule;
+			path = MainScene;
 			sourceTree = "<group>";
 		};
 		FA1B752928FE07A7004FD8A6 /* NetworkModule */ = {
@@ -247,7 +247,6 @@
 				FA1B752E28FE0F64004FD8A6 /* PhoneNumber.swift */,
 				FA2A05C129032E3400A04876 /* EmployeeName.swift */,
 				FA2A05C329032E9200A04876 /* Employee.swift */,
-				FA3D6441290330F700799D57 /* NetworkWorker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -255,6 +254,7 @@
 		FA3D6440290330E100799D57 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				FA3D6441290330F700799D57 /* NetworkWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
