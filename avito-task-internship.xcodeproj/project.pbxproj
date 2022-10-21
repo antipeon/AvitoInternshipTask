@@ -125,8 +125,8 @@
 		FA1B752928FE07A7004FD8A6 /* NetworkModule */ = {
 			isa = PBXGroup;
 			children = (
-				FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */,
 				FA1B751F28FDF3A4004FD8A6 /* NetworkModels */,
+				FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */,
 			);
 			path = NetworkModule;
 			sourceTree = "<group>";

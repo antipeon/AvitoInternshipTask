@@ -35,6 +35,7 @@ final class NetworkService {
             switch cacheLoadResult {
             case .success(let cachedModel):
                 if let cachedModel = cachedModel {
+                    // TODO: replace with loger
                     print("cache hit")
                     completion(.success(cachedModel))
                     return
@@ -50,6 +51,7 @@ final class NetworkService {
     
     // MARK: - Private funcs
     private func onCacheMiss(_ request: URLRequest,_ completion: @escaping CompletionHandler) {
+        // TODO: replace with loger
         print("cache miss - fetching from network")
         let task = dataTask(request, completion)
         
@@ -109,6 +111,7 @@ final class NetworkService {
                 self.cache.save(model) { saveResult in
                     switch saveResult {
                     case .success(_):
+                        // TODO: replace with loger
                         print("saved to cache successfuly")
                     case .failure(let error):
                         assert(false, "couldn't save to cache - \(error.localizedDescription)")
