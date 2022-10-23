@@ -12,6 +12,7 @@ $ pod install
 
 - Custom cache
 - Clean Swift architecture
+- Write tests
 - Support dark theme
 - Support landscape orientation
 - Use [Swiftlint](https://github.com/realm/SwiftLint) & [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) logger
