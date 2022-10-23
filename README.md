@@ -11,9 +11,13 @@ $ pod install
 ## Extra features implemented
 
 - Custom cache
-- Clean Swift architecture
-- Write tests
-- Support dark theme
-- Support landscape orientation
-- Use [Swiftlint](https://github.com/realm/SwiftLint) & [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) logger
+- Clean Swift architecture (for better testing and further scalability of the app)
+- Wrote tests (aimed for full test coverage - 85.0 %)
+- Supported dark theme
+- Supported landscape orientation
+- Used [Swiftlint](https://github.com/realm/SwiftLint) & [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) logger
+- Adaptive layout for big and small devices. Tested layout on Iphone 14 Pro, IPad Pro 12.9inch (3rd gen), iPod touch (7th gen)
+- Tested behaviour for iOS 13 on IPad Pro 12.9inch (3rd gen)
 
+## Other tools used
+- Used Postman and Charles to check API. Used Network Link Conditioner to simulate bad network and interrupt network connection during request to catch timeout

@@ -20,15 +20,6 @@ final class MainViewController: UIViewController, MainDisplayLogic, UITableViewD
     // expose for testing
     var displayedModel = Main.FetchData.ViewModel.Company(company: CompanyNetworkModel())
 
-    // MARK: - init
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     // MARK: - Subviews
 
     // expose tableView to mock for tests

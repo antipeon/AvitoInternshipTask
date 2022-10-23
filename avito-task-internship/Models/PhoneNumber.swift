@@ -32,6 +32,6 @@ extension PhoneNumber: RawRepresentable {
             return nil
         }
 
-        self.number = rawValue
+        self.init(number: rawValue)
     }
 }
