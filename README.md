@@ -12,7 +12,7 @@ $ pod install
 
 - Custom cache
 - Clean Swift architecture (for better testing and further scalability of the app)
-- Wrote tests (aimed for full test coverage - 85.0 %)
+- Wrote tests (aimed for full test coverage, achieved 85.0 %)
 - Supported dark theme
 - Supported landscape orientation
 - Used [Swiftlint](https://github.com/realm/SwiftLint) & [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) logger
