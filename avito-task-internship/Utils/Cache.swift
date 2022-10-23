@@ -7,27 +7,35 @@
 
 import Foundation
 
-final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
+protocol CacheProtocol {
+    associatedtype T: Codable
+    func save(_ model: T, completion: @escaping (Result<Void, Error>) -> Void)
+    func load(_ completion: @escaping (Result<T?, Error>) -> Void)
+}
+
+final class Cache<T: Codable, CacheDiskStorageT: CacheDiskStorageProtocol>: CacheProtocol {
+
     // MARK: - Private vars
     private let expirationTimeInterval: TimeInterval
-    private let currentDateProvider: () -> Date
-    private let parser: Parser<T>
+    private let parser = Parser<T>()
     private let cacheDiskStorage: CacheDiskStorageT
+    private var userDefaults: UserDefaultsWrapperProtocol
+    private let currentDateProvider: () -> Date
 
     /// allow only one save/multiple-load operations at a time
     private let synchronizeSaveLoadQueue = DispatchQueue(label: "synchronizeSaveLoad", qos: .utility, attributes: .concurrent)
 
     // MARK: - init
     init(
-        parser: Parser<T>,
         cacheDiskStorage: CacheDiskStorageT = CacheDiskStorage("network.cache"),
         invalidatationTimeInterval: TimeInterval = TimeInterval.minute,
-        currentDateProvider: @escaping () -> Date = { Date() }
+        currentDateProvider: @escaping () -> Date = { Date() },
+        userDefaults: UserDefaultsWrapperProtocol = UserSettings.shared
     ) {
         self.expirationTimeInterval = invalidatationTimeInterval
-        self.parser = parser
         self.currentDateProvider = currentDateProvider
         self.cacheDiskStorage = cacheDiskStorage
+        self.userDefaults = userDefaults
     }
 
     // MARK: - API
@@ -37,7 +45,7 @@ final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
     ///   - model: model to save to cache
     ///   - completion: Errors: parsing, writing to disk.
     ///   Queue for completion to run is up to the user.
-    func save(_ model: T, completion: @escaping (Result<Void, Error>) -> Void) where T: Encodable {
+    func save(_ model: T, completion: @escaping (Result<Void, Error>) -> Void) {
 
         synchronizeSaveLoadQueue.async(flags: .barrier) { [weak self] in
             guard let self = self else {
@@ -60,7 +68,7 @@ final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
                 case .success(let data):
                     let result = Result {
                         try self.cacheDiskStorage.save(data)
-                        UserSettings.cacheDate = Date()
+                        self.userDefaults.cacheDate = self.currentDateProvider()
                     }
                     completion(result)
                 case .failure(let error):
@@ -76,7 +84,7 @@ final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
     /// - Parameters:
     ///   - completion: Model from cache; nil if no model or model is expired. Error: parsing, reading from disk, wrong url.
     ///   Queue for completion to run is up to the user.
-    func load(_ completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
+    func load(_ completion: @escaping (Result<T?, Error>) -> Void) {
 
         synchronizeSaveLoadQueue.async { [weak self] in
             guard let self = self else {
@@ -111,17 +119,17 @@ final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
     }
 
     var cacheEmptyOrExpired: Bool {
-        UserSettings.cacheDate == nil
+        userDefaults.cacheDate == nil
     }
 
     // MARK: - Private funcs
     private func invalidateCacheIfNeeded() {
-        guard let lastSavedDate = UserSettings.cacheDate else {
+        guard let lastSavedDate = userDefaults.cacheDate else {
             return
         }
 
         if lastSavedDate.addingTimeInterval(expirationTimeInterval) < currentDateProvider() {
-            UserSettings.cacheDate = nil
+            userDefaults.cacheDate = nil
         }
     }
 }

@@ -7,17 +7,25 @@
 
 import Foundation
 
+protocol UserDefaultsWrapperProtocol {
+    var cacheDate: Date? { get set }
+}
+
 final class UserSettings {
+    static var shared = UserDefaultsWrapper()
+}
+
+final class UserDefaultsWrapper: UserDefaultsWrapperProtocol {
     @Storage(key: "cacheDate", defaultValue: nil)
-    static var cacheDate: Date?
+    var cacheDate: Date?
 }
 
 @propertyWrapper
-public struct Storage<T: Codable> {
+struct Storage<T: Codable> {
     private let key: String
     private let defaultValue: T
 
-    public var wrappedValue: T {
+    var wrappedValue: T {
         get {
             guard let data = UserDefaults.standard.object(forKey: key) as? Data else {
                 return defaultValue
@@ -32,7 +40,7 @@ public struct Storage<T: Codable> {
         }
     }
 
-    public init(key: String, defaultValue: T) {
+    init(key: String, defaultValue: T) {
         self.key = key
         self.defaultValue = defaultValue
     }

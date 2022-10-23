@@ -38,10 +38,14 @@
 		FA3D6444290338B100799D57 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D6443290338B100799D57 /* MainPresenter.swift */; };
 		FA3D644D2904369A00799D57 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D64492904369A00799D57 /* MainViewControllerTests.swift */; };
 		FA3D644E2904369A00799D57 /* MainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D644A2904369A00799D57 /* MainInteractorTests.swift */; };
-		FA3D644F2904369A00799D57 /* MainWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D644B2904369A00799D57 /* MainWorkerTests.swift */; };
+		FA3D644F2904369A00799D57 /* NetworkWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D644B2904369A00799D57 /* NetworkWorkerTests.swift */; };
 		FA3D64502904369A00799D57 /* MainPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D644C2904369A00799D57 /* MainPresenterTests.swift */; };
 		FA3D64522904663900799D57 /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D64512904663900799D57 /* Seeds.swift */; };
 		FA3D645429047A0A00799D57 /* Result+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D645329047A0A00799D57 /* Result+ext.swift */; };
+		FA3D645A290553B200799D57 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D6459290553B200799D57 /* ParserTests.swift */; };
+		FA3D645C29055E9A00799D57 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D645B29055E9A00799D57 /* CacheTests.swift */; };
+		FABA679D29057E6900A7D58F /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA679C29057E6900A7D58F /* NetworkAPI.swift */; };
+		FABA679F290586A600A7D58F /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA679E290586A600A7D58F /* NetworkServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,10 +95,14 @@
 		FA3D6443290338B100799D57 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		FA3D64492904369A00799D57 /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
 		FA3D644A2904369A00799D57 /* MainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorTests.swift; sourceTree = "<group>"; };
-		FA3D644B2904369A00799D57 /* MainWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorkerTests.swift; sourceTree = "<group>"; };
+		FA3D644B2904369A00799D57 /* NetworkWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWorkerTests.swift; sourceTree = "<group>"; };
 		FA3D644C2904369A00799D57 /* MainPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenterTests.swift; sourceTree = "<group>"; };
 		FA3D64512904663900799D57 /* Seeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
 		FA3D645329047A0A00799D57 /* Result+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+ext.swift"; sourceTree = "<group>"; };
+		FA3D6459290553B200799D57 /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		FA3D645B29055E9A00799D57 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
+		FABA679C29057E6900A7D58F /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
+		FABA679E290586A600A7D58F /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,10 +165,10 @@
 			isa = PBXGroup;
 			children = (
 				FA3D64482904367D00799D57 /* Scenes */,
+				FA2A059728FF344600A04876 /* Utils */,
 				FA3D6440290330E100799D57 /* Workers */,
 				FA2A05BE29032B6900A04876 /* Models */,
 				FA2A05A12901CD9400A04876 /* Extensions */,
-				FA2A059728FF344600A04876 /* Utils */,
 				FA1B752928FE07A7004FD8A6 /* NetworkModule */,
 				FA1B750B28FDF192004FD8A6 /* AppDelegate.swift */,
 				FA1B750D28FDF192004FD8A6 /* SceneDelegate.swift */,
@@ -198,6 +206,7 @@
 			children = (
 				FA1B751F28FDF3A4004FD8A6 /* NetworkModels */,
 				FA1B752228FDFD6B004FD8A6 /* NetworkService.swift */,
+				FABA679C29057E6900A7D58F /* NetworkAPI.swift */,
 			);
 			path = NetworkModule;
 			sourceTree = "<group>";
@@ -247,6 +256,9 @@
 			isa = PBXGroup;
 			children = (
 				FA3D64472904367500799D57 /* Scenes */,
+				FA3D64562905534B00799D57 /* Utils */,
+				FABA679A290577C900A7D58F /* NetworkModule */,
+				FA3D64552905512000799D57 /* Workers */,
 				FA3D64512904663900799D57 /* Seeds.swift */,
 			);
 			path = Tests;
@@ -274,10 +286,7 @@
 		FA3D64472904367500799D57 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				FA3D64492904369A00799D57 /* MainViewControllerTests.swift */,
-				FA3D644A2904369A00799D57 /* MainInteractorTests.swift */,
-				FA3D644B2904369A00799D57 /* MainWorkerTests.swift */,
-				FA3D644C2904369A00799D57 /* MainPresenterTests.swift */,
+				FABA679B290577E500A7D58F /* Main */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -288,6 +297,41 @@
 				FA1B752428FDFE67004FD8A6 /* Main */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		FA3D64552905512000799D57 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				FA3D644B2904369A00799D57 /* NetworkWorkerTests.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		FA3D64562905534B00799D57 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FA3D6459290553B200799D57 /* ParserTests.swift */,
+				FA3D645B29055E9A00799D57 /* CacheTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		FABA679A290577C900A7D58F /* NetworkModule */ = {
+			isa = PBXGroup;
+			children = (
+				FABA679E290586A600A7D58F /* NetworkServiceTests.swift */,
+			);
+			path = NetworkModule;
+			sourceTree = "<group>";
+		};
+		FABA679B290577E500A7D58F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				FA3D64492904369A00799D57 /* MainViewControllerTests.swift */,
+				FA3D644A2904369A00799D57 /* MainInteractorTests.swift */,
+				FA3D644C2904369A00799D57 /* MainPresenterTests.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +500,7 @@
 				FA2A05A72901E15800A04876 /* InfoLabel.swift in Sources */,
 				FA2A05A52901D5B300A04876 /* UIFont+ext.swift in Sources */,
 				FA1B752328FDFD6B004FD8A6 /* NetworkService.swift in Sources */,
+				FABA679D29057E6900A7D58F /* NetworkAPI.swift in Sources */,
 				FA2A059D2900073500A04876 /* CacheDiskStorage.swift in Sources */,
 				FA3D6444290338B100799D57 /* MainPresenter.swift in Sources */,
 				FA2A059928FF347600A04876 /* UserSettings.swift in Sources */,
@@ -487,10 +532,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3D645C29055E9A00799D57 /* CacheTests.swift in Sources */,
 				FA3D644E2904369A00799D57 /* MainInteractorTests.swift in Sources */,
+				FABA679F290586A600A7D58F /* NetworkServiceTests.swift in Sources */,
 				FA3D64522904663900799D57 /* Seeds.swift in Sources */,
+				FA3D645A290553B200799D57 /* ParserTests.swift in Sources */,
 				FA3D64502904369A00799D57 /* MainPresenterTests.swift in Sources */,
-				FA3D644F2904369A00799D57 /* MainWorkerTests.swift in Sources */,
+				FA3D644F2904369A00799D57 /* NetworkWorkerTests.swift in Sources */,
 				FA3D644D2904369A00799D57 /* MainViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

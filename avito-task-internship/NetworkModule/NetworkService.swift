@@ -8,25 +8,32 @@
 import Foundation
 import CocoaLumberjack
 
-final class NetworkService: CompanyFetcherProtocol {
+final class NetworkService<
+    CacheT: CacheProtocol,
+        ParserT: DecodableParserProtocol & EncodableParserProtocol
+>: CompanyFetcherProtocol where CacheT.T == CompanyNetworkResponseModel,
+                                    ParserT.E == CompanyNetworkResponseModel,
+                                    ParserT.D == CompanyNetworkResponseModel {
 
     typealias CompletionHandler = CompanyFetcherProtocol.CompletionHandler
 
     // MARK: - Private vars
-    private var urlSessionTask: URLSessionDataTask?
-    private lazy var cache = Cache<CompanyNetworkResponseModel>(parser: parser)
-    private let parser = Parser<CompanyNetworkResponseModel>()
-    private let request = URL(string: Constants.urlString).flatMap {
-        URLRequest(url: $0)
+    private let cache: CacheT
+    private let parser: ParserT
+    private let networkAPI: NetworkApiProtocol
+
+    init(
+        cache: CacheT = Cache<CompanyNetworkResponseModel, CacheDiskStorage>(),
+        networkAPI: NetworkApiProtocol = NetworkAPI(),
+        parser: ParserT = Parser<CompanyNetworkResponseModel>()
+    ) {
+        self.cache = cache
+        self.networkAPI = networkAPI
+        self.parser = parser
     }
 
     // MARK: - API
     func fetchCompanyData(_ completion: @escaping CompletionHandler) {
-
-        guard let request = request else {
-            completion(.failure(NetworkError.incorrectURL))
-            return
-        }
 
         cache.load { [weak self] cacheLoadResult in
             guard let self = self else {
@@ -41,7 +48,7 @@ final class NetworkService: CompanyFetcherProtocol {
                     return
                 }
 
-                self.onCacheMiss(request, completion)
+                self.onCacheMiss(completion)
 
             case .failure(let error):
                 completion(.failure(error))
@@ -50,25 +57,19 @@ final class NetworkService: CompanyFetcherProtocol {
     }
 
     // MARK: - Private funcs
-    private func onCacheMiss(_ request: URLRequest, _ completion: @escaping CompletionHandler) {
+    private func onCacheMiss(_ completion: @escaping CompletionHandler) {
         DDLogInfo("cache miss - fetching from network")
-        let task = dataTask(request, completion)
-
-        // TODO: think about what to do if task is set
-//        urlSessionTask?.cancel()
-        urlSessionTask = task
-        urlSessionTask?.resume()
+        performNetworkRequest(completion)
     }
 
-    private func dataTask(_ request: URLRequest, _ completion: @escaping CompletionHandler) -> URLSessionDataTask {
-        return URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+    private func performNetworkRequest(_ completion: @escaping CompletionHandler) {
+        networkAPI.performRequest { [weak self] data, response, error in
 
             guard let self = self else {
                 return
             }
 
             if let error = error {
-                // TODO: process error
                 let nsError = error as NSError
                 if nsError.domain == NSURLErrorDomain, nsError.code == -1009 {
                     completion(.failure(NetworkError.noInternetConnection))
@@ -83,14 +84,12 @@ final class NetworkService: CompanyFetcherProtocol {
                 return
             }
 
-            guard let response = response else {
-                // TODO: process response
+            guard response != nil else {
                 completion(.failure(NetworkError.responseError))
                 return
             }
 
             guard let data = data else {
-                // TODO: check when possible
                 completion(.failure(NetworkError.networkError))
                 return
             }
@@ -123,11 +122,6 @@ final class NetworkService: CompanyFetcherProtocol {
             }
         }
     }
-
-    // MARK: - Constants
-    enum Constants {
-        static let urlString = "https://run.mocky.io/v3/1d1cb4ec-73db-4762-8c4b-0b8aa3cecd4c"
-    }
 }
 
 // MARK: - NetworkError
@@ -135,6 +129,5 @@ enum NetworkError: Error {
     case networkError
     case timeout
     case responseError
-    case incorrectURL
     case noInternetConnection
 }

@@ -77,7 +77,7 @@ final class MainInteractor: MainBusinessLogic, MainDataStore {
             return .timeout
         case .noInternetConnection:
             return .noInternetConnection
-        case .incorrectURL, .networkError, .responseError:
+        case .networkError, .responseError:
             return .unhandledError
         }
     }

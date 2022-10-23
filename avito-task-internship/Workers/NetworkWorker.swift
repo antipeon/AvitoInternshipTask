@@ -13,14 +13,14 @@ protocol CompanyFetcherProtocol {
 }
 
 final class NetworkWorker {
-    private let companyFetcher: CompanyFetcherProtocol
+    var companyFetcher: CompanyFetcherProtocol?
 
-    init(companyFetcher: CompanyFetcherProtocol) {
+    init(companyFetcher: CompanyFetcherProtocol = NetworkService()) {
         self.companyFetcher = companyFetcher
     }
 
     func fetchCompanyData(_ completion: @escaping CompanyFetcherProtocol.CompletionHandler) {
-        companyFetcher.fetchCompanyData { result in
+        companyFetcher?.fetchCompanyData { result in
             completion(result)
         }
     }
