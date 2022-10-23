@@ -43,11 +43,21 @@ final class MainInteractor: MainBusinessLogic, MainDataStore {
             self.companyOrError = companyOrError
             let response = Main.FetchData.Response.CompanyOrError(companyOrError: companyOrError)
 
-            DispatchQueue.main.async {
-                self.presenter?.presentFetchedData(response: response)
-                self.presenter?.presentFinishedFetchingData(response: Main.FetchData.Response.Dummy())
+            if Thread.current.isMainThread {
+                // synchronious behaviour for tests
+                self.sendResponseToPresenter(response)
+            } else {
+                DispatchQueue.main.async {
+                    self.sendResponseToPresenter(response)
+                }
             }
+
         }
+    }
+
+    private func sendResponseToPresenter(_ response: Main.FetchData.Response.CompanyOrError) {
+        self.presenter?.presentFetchedData(response: response)
+        self.presenter?.presentFinishedFetchingData(response: Main.FetchData.Response.Dummy())
     }
 
     private func transformToBusinessLogicError(_ error: Error) -> BusinessLogicError {

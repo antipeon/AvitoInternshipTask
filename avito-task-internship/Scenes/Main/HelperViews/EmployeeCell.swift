@@ -108,11 +108,22 @@ final class EmployeeCell: UITableViewCell {
     }
 
     // MARK: - Public funcs
-    // TODO: remove this
+    var nameLabelText: String? {
+        nameLabel.text
+    }
+
+    var phoneLabelText: String? {
+        phoneLabel.text
+    }
+
+    var skillsLabelText: String? {
+        skillsLabel.text
+    }
+
     func configureWithModel(_ model: EmployeeNetworkModel) {
         nameLabel.configureInfoText(infoViewText: model.name)
         phoneLabel.configureInfoText(infoViewText: model.phoneNumber)
-        skillsLabel.configureInfoText(infoViewText: model.skills.appending("Bugfixfixfixfixfix").joined(separator: ", "))
+        skillsLabel.configureInfoText(infoViewText: model.skills.joined(separator: ", "))
     }
 
     // MARK: - Constants
@@ -120,14 +131,5 @@ final class EmployeeCell: UITableViewCell {
         fileprivate static let labelInset: CGFloat = 5
         fileprivate static let spaceBetweenCells: CGFloat = 6
         static let cornerRadius: CGFloat = 16
-    }
-}
-
-// TODO: remove this
-extension RangeReplaceableCollection {
-    func appending(_ element: Element) -> Self {
-        var new = self
-        new.append(element)
-        return new
     }
 }

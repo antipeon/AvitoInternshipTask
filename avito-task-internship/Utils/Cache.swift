@@ -7,12 +7,12 @@
 
 import Foundation
 
-final class Cache<T> {
+final class Cache<T, CacheDiskStorageT: CacheDiskStorageProtocol> {
     // MARK: - Private vars
     private let expirationTimeInterval: TimeInterval
     private let currentDateProvider: () -> Date
     private let parser: Parser<T>
-    private let cacheDiskStorage = CacheDiskStorage("network.cache")
+    private let cacheDiskStorage: CacheDiskStorageT
 
     /// allow only one save/multiple-load operations at a time
     private let synchronizeSaveLoadQueue = DispatchQueue(label: "synchronizeSaveLoad", qos: .utility, attributes: .concurrent)
@@ -20,12 +20,14 @@ final class Cache<T> {
     // MARK: - init
     init(
         parser: Parser<T>,
+        cacheDiskStorage: CacheDiskStorageT = CacheDiskStorage("network.cache"),
         invalidatationTimeInterval: TimeInterval = TimeInterval.minute,
         currentDateProvider: @escaping () -> Date = { Date() }
     ) {
         self.expirationTimeInterval = invalidatationTimeInterval
         self.parser = parser
         self.currentDateProvider = currentDateProvider
+        self.cacheDiskStorage = cacheDiskStorage
     }
 
     // MARK: - API

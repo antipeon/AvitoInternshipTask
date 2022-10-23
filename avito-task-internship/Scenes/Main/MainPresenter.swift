@@ -27,7 +27,7 @@ final class MainPresenter: MainPresentationLogic {
                 employee1.name < employee2.name
             }
 
-            let viewModel = Main.FetchData.ViewModel.Company(company: company)
+            let viewModel = Main.FetchData.ViewModel.Company(company: sortedCompany)
 
             viewController?.presentCompanyData(viewModel: viewModel)
         case .failure(let error):

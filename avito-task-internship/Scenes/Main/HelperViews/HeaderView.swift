@@ -43,4 +43,9 @@ final class HeaderView: UITableViewHeaderFooterView {
     func setTitle(_ title: String) {
         titleView.text = title
     }
+
+    // expose for test
+    var title: String? {
+        titleView.text
+    }
 }

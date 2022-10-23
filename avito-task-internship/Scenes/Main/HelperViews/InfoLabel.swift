@@ -48,6 +48,16 @@ final class InfoLabel: UIView {
         layoutIfNeeded()
     }
 
+    var text: String? {
+        guard let first = tagView.text else {
+            return nil
+        }
+        guard let second = infoView.text else {
+            return nil
+        }
+        return first + second
+    }
+
     // MARK: - Private funcs
     private func setUpSubviews() {
         addSubview(tagView)

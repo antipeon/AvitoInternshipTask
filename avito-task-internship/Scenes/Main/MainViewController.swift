@@ -17,8 +17,8 @@ protocol MainDisplayLogic: AnyObject {
 final class MainViewController: UIViewController, MainDisplayLogic, UITableViewDelegate, UITableViewDataSource {
     var interactor: MainBusinessLogic?
 
-    // MARK: - Private vars
-    private var displayedModel = Main.FetchData.ViewModel.Company(company: CompanyNetworkModel())
+    // expose for testing
+    var displayedModel = Main.FetchData.ViewModel.Company(company: CompanyNetworkModel())
 
     // MARK: - init
     init() {
@@ -30,7 +30,9 @@ final class MainViewController: UIViewController, MainDisplayLogic, UITableViewD
     }
 
     // MARK: - Subviews
-    private lazy var tableView: UITableView = {
+
+    // expose tableView to mock for tests
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(EmployeeCell.self, forCellReuseIdentifier: EmployeeCell.reuseId)
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.reuseId)

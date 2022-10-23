@@ -7,7 +7,12 @@
 
 import Foundation
 
-final class CacheDiskStorage {
+protocol CacheDiskStorageProtocol {
+    func save(_ data: Data) throws
+    func loadData() throws -> Data
+}
+
+final class CacheDiskStorage: CacheDiskStorageProtocol {
     private let cacheUrl: URL
 
     init(_ filename: String) {
